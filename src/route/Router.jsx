@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Header from '../layout/header/Header';
+import AuthLayout from '../layout/auth/AuthLayout';
 import FriendPage from '../pages/FriendPage';
 import LoginPage from '../pages/LoginPage';
 import PostPage from '../pages/PostPage';
@@ -13,13 +13,16 @@ function Router() {
     <>
       <Routes>
         {user ? (
-          <>
-            <Route path="/" element={<Header />} />
+          <Route path="/" element={<AuthLayout />}>
+            <Route path="/" element={<PostPage />} />
             <Route path="/friend" element={<FriendPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-          </>
+          </Route>
         ) : (
-          <Route path="/" element={<LoginPage />} />
+          <>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
         )}
       </Routes>
     </>

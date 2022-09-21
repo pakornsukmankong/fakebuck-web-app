@@ -1,31 +1,42 @@
+import { Link } from 'react-router-dom';
 import Avatar from '../../components/ui/Avatar';
+import { useAuth } from '../../contexts/AuthContext';
 
-function DropdownMenu() {
+function DropdownMenu({ open, onClose }) {
+  const {
+    logout,
+    user: { profileImage, firstName, lastName },
+  } = useAuth();
   return (
-    <ul className="dropdown-menu end-0 px-2 mt-1 border shadow-sm rounded-xl w-sm-90 d-block">
+    <ul
+      className={`dropdown-menu end-0 px-2 mt-1 border shadow-sm rounded-xl w-sm-90 ${
+        open ? 'd-block' : ''
+      }`}
+    >
       <li>
-        <a
-          href="/profile"
+        <Link
+          to="/profile"
           className="dropdown-item p-2 d-flex align-items-center gap-3 hover-bg-neutral-100 hover-rounded-lg"
+          onClick={onClose}
         >
-          <Avatar
-            src={
-              'https://images.pexels.com/photos/5193860/pexels-photo-5193860.png'
-            }
-            size="60"
-          />
+          <Avatar src={profileImage} size="60" />
 
           <div className="d-flex flex-column">
-            <span className="text-black fw-bold">Hsiao Li</span>
+            <span className="text-black fw-bold">
+              {firstName} {lastName}
+            </span>
             <small className="text-muted">See your profile</small>
           </div>
-        </a>
+        </Link>
       </li>
       <li>
         <hr className="dropdown-divider mx-2 border-1" />
       </li>
       <li>
-        <button className="dropdown-item p-2 d-flex align-items-center gap-3 hover-bg-neutral-100 hover-rounded-lg">
+        <button
+          className="dropdown-item p-2 d-flex align-items-center gap-3 hover-bg-neutral-100 hover-rounded-lg"
+          onClick={logout}
+        >
           <i className="fas fa-sign-out-alt rounded-circle p-2 text-black text-5 bg-gray-300" />
           <small className="text-black fw-bold">Log Out</small>
         </button>
