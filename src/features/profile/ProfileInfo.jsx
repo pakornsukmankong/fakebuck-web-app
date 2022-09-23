@@ -1,11 +1,15 @@
+import { useAuth } from '../../contexts/AuthContext';
 import ProfileEdit from './ProfileEdit';
 
 function ProfileInfo({ isMe }) {
+  const {
+    user: { profileImage, firstName, lastName },
+  } = useAuth();
   return (
     <div className="d-flex flex-column flex-md-row align-items-center align-items-md-stretch mx-auto px-3 space-x-4 max-w-266">
       <div className="-mt-20 -mt-md-10 z-10">
         <img
-          src="https://i.scdn.co/image/ab6761610000e5eb006ff3c0136a71bfb9928d34"
+          src={profileImage}
           className="rounded-circle border border-4 border-white"
           width="168"
           height="168"
@@ -14,7 +18,9 @@ function ProfileInfo({ isMe }) {
       </div>
 
       <div className="my-3 flex-grow-1 d-flex flex-column align-items-center d-md-block">
-        <h2 className="fw-bold mb-0">IU</h2>
+        <h2 className="fw-bold mb-0">
+          {firstName} {lastName}
+        </h2>
         <span className="d-inline-block text-muted py-1">5 Friends</span>
         <div>
           <span>
