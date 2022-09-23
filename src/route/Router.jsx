@@ -16,7 +16,6 @@ function Router() {
           <Route path="/" element={<AuthLayout />}>
             <Route path="/" element={<PostPage />} />
             <Route path="/friend" element={<FriendPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Route>

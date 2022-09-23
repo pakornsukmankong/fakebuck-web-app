@@ -1,10 +1,6 @@
 import CoverImage from '../../components/ui/CoverImage';
-import { useAuth } from '../../contexts/AuthContext';
 
-function ProfileCover() {
-  const {
-    user: { coverImage },
-  } = useAuth();
+function ProfileCover({ coverImage }) {
   return (
     <div
       className="overflow-hidden position-relative mx-auto rounded-b-lg max-w-274 max-h-101"
