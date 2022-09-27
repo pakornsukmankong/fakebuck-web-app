@@ -4,6 +4,7 @@ import PostCreateToggle from './PostCreateToggle';
 import PostList from './PostList';
 import * as postService from '../../api/postApi';
 import * as likeService from '../../api/likeApi';
+import * as commentService from '../../api/commentApi';
 import { useAuth } from '../../contexts/AuthContext';
 
 function PostContainer() {
@@ -53,11 +54,23 @@ function PostContainer() {
     }
   };
 
+  const createComment = async (input, postId) => {
+    const res = await commentService.createComment(input, postId);
+    const idx = posts.findIndex((item) => item.id === postId);
+    const newPosts = [...posts];
+    newPosts[idx].Comments.push(res.data.comment);
+    setPosts(newPosts);
+  };
+
   return (
     <div className="mx-auto py-4 max-w-152">
       <div className="mx-2 d-flex flex-column gap-3">
         <PostCreateToggle createPost={createPost} />
-        <PostList posts={posts} toggleLike={toggleLike} />
+        <PostList
+          posts={posts}
+          toggleLike={toggleLike}
+          createComment={createComment}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,7 @@
-function PostReaction({ post: { Likes: likes, Comments: comments } }) {
+function PostReaction({
+  post: { Likes: likes, Comments: comments },
+  toggleComment,
+}) {
   return (
     <div className="d-flex tw-py-2.5">
       {likes.length > 0 && (
@@ -10,7 +13,11 @@ function PostReaction({ post: { Likes: likes, Comments: comments } }) {
         </div>
       )}
       {comments.length > 0 && (
-        <small className="text-muted hover-underline" role="button">
+        <small
+          className="text-muted hover-underline"
+          role="button"
+          onClick={toggleComment}
+        >
           {comments.length} Comments
         </small>
       )}
