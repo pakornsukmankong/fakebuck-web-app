@@ -1,65 +1,64 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
-import { useLoading } from '../../contexts/LoadingContext';
-import ProfileCover from './ProfileCover';
-import ProfileInfo from './ProfileInfo';
-import * as userService from '../../api/userApi';
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import { useParams } from 'react-router-dom'
+import { useLoading } from '../../contexts/LoadingContext'
+import ProfileCover from './ProfileCover'
+import ProfileInfo from './ProfileInfo'
+import * as userService from '../../api/userApi'
 import {
   FRIEND_STATUS_ACCEPTER,
   FRIEND_STATUS_ANONYMOUS,
   FRIEND_STATUS_FRIEND,
   FRIEND_STATUS_ME,
   FRIEND_STATUS_REQUESTER,
-} from '../../config/constant';
-import { useAuth } from '../../contexts/AuthContext';
+} from '../../config/constant'
+import { useAuth } from '../../contexts/AuthContext'
 
 function ProfileContainer() {
-  const { id } = useParams();
+  const { id } = useParams()
 
-  const [user, setUser] = useState({});
-  const [friends, setFriends] = useState([]);
-  const [statusWithMe, setStatusWithMe] = useState('');
+  const [user, setUser] = useState({})
+  const [friends, setFriends] = useState([])
+  const [statusWithMe, setStatusWithMe] = useState('')
 
-  const { startLoading, stopLoading } = useLoading();
-  const { user: me } = useAuth();
+  const { startLoading, stopLoading } = useLoading()
+  const { user: me } = useAuth()
 
   useEffect(() => {
     const fetchUserFriends = async () => {
       try {
-        startLoading();
-        const res = await userService.getUserFriends(id);
-        setUser(res.data.user);
-        setFriends(res.data.friends);
-        setStatusWithMe(res.data.statusWithMe);
+        startLoading()
+        const res = await userService.getUserFriends(id)
+        setUser(res.data.user)
+        setFriends(res.data.friends)
+        setStatusWithMe(res.data.statusWithMe)
       } catch (err) {
-        console.log(err);
-        toast.error(err.response?.data.message);
+        console.log(err)
+        toast.error(err.response?.data.message)
       } finally {
-        stopLoading();
+        stopLoading()
       }
-    };
-    fetchUserFriends();
-  }, [id, me, startLoading, startLoading]);
+    }
+    fetchUserFriends()
+  }, [id, me, startLoading, startLoading])
 
   const changeStatusWithMe = (nextStatus) => {
-    setStatusWithMe(nextStatus);
-  };
+    setStatusWithMe(nextStatus)
+  }
 
   const deleteFriend = () => {
-    const nextFriends = friends.filter((item) => item.id !== me.id);
-    setFriends(nextFriends);
-  };
+    const nextFriends = friends.filter((item) => item.id !== me.id)
+    setFriends(nextFriends)
+  }
 
   const createFriend = () => {
-    setFriends([...friends, me]);
-  };
+    setFriends([...friends, me])
+  }
 
   return (
     <div
       className="shadow-sm pb-2"
-      style={{ backgroundImage: 'linear-gradient(#f0f2f5, #fff)' }}
-    >
+      style={{ backgroundImage: 'linear-gradient(#f0f2f5, #fff)' }}>
       <ProfileCover coverImage={user.coverImage} />
       <ProfileInfo
         isMe={statusWithMe === FRIEND_STATUS_ME}
@@ -74,7 +73,7 @@ function ProfileContainer() {
         createFriend={createFriend}
       />
     </div>
-  );
+  )
 }
 
-export default ProfileContainer;
+export default ProfileContainer

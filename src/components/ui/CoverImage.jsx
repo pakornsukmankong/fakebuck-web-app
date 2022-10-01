@@ -1,4 +1,4 @@
-import coverImage from '../../assets/images/iu.jpg';
+import coverImage from '../../assets/images/cover-image.jpg';
 
 function CoverImage({ src }) {
   return (
